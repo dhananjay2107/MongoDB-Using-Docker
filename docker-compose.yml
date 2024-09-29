@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-demo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: mongodemo
+    ports:
+      - "27017:27017"
+
+  python-app:
+    build: .
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongoadmin:mongodemo@mongo-demo:27017/employeedb?authSource=admin
+    command: python /app/mongo.py
