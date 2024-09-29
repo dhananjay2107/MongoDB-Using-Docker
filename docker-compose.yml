@@ -15,4 +15,4 @@ services:
       - mongo
     environment:
       MONGO_URI: mongodb://mongoadmin:mongodemo@mongo-demo:27017/employeedb?authSource=admin
-    command: python /app/mongo.py
+    command: python /app/connect_mongo.py
