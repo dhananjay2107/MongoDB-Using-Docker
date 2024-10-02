@@ -1,18 +1,24 @@
 version: '3.8'
 services:
   mongo:
-    image: mongo
-    container_name: mongo-demo
+    image: localhost:5000/mongodb
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoadmin
       MONGO_INITDB_ROOT_PASSWORD: mongodemo
     ports:
       - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
 
   python-app:
     build: .
     depends_on:
       - mongo
     environment:
-      MONGO_URI: mongodb://mongoadmin:mongodemo@mongo-demo:27017/employeedb?authSource=admin
+      MONGO_URI: mongodb://mongoadmin:mongodemo@mongodb:27017/employeedb?authSource=admin
     command: python /app/connect_mongo.py
+
+volumes:
+  mongo-data:
